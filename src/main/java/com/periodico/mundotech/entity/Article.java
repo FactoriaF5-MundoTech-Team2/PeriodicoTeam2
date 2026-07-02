@@ -4,10 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-@Entity
-@Table(name = "articles")  
-@Data
+// @Entity
+// @Table(name = "articles")  
+// @Data
 
-public class Article {
+// //public class Article {
 
-}
+// //}
