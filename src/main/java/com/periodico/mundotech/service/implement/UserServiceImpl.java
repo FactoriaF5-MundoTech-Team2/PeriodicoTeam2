@@ -24,7 +24,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user, List<Integer> rolesIds) {
+        if (user == null) {
+            throw new RuntimeException("El usuario no puede ser nulo");
+        } 
         Set<Role> roles=roleService.getAllRoles(rolesIds);
+        if (roles.isEmpty()) {
+            throw new RuntimeException("debe asignar al menos un rol al usuario");
+        }
         user.setRoles(roles);
         return userRepository.save(user);
     }
