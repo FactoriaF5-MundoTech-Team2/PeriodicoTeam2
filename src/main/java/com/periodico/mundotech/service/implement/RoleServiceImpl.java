@@ -21,7 +21,10 @@ public class RoleServiceImpl implements RoleService{
     }
     @Override
     public Set<Role> getAllRoles(List<Integer> rolesId) {
-        Set<Role> roles=roleRepository.findAllById(rolesId).stream().collect(Collectors.toSet());
+        Set<Role> roles = roleRepository.findAllById(rolesId).stream().collect(Collectors.toSet());
+        if (roles.size() != rolesId.size()) {
+            throw new RuntimeException("Uno o mas roles no existen");
+        }
         return roles;
     }
 }
