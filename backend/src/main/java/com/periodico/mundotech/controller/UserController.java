@@ -4,14 +4,14 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.periodico.mundotech.entity.User;
+import com.periodico.mundotech.dto.request.UserRequestDTO;
+import com.periodico.mundotech.dto.response.UserResponseDTO;
 import com.periodico.mundotech.service.UserService;
 
 import jakarta.validation.Valid;
@@ -26,8 +26,8 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user, @RequestParam List<Integer> rolesIds) {
-        User createdUser = userService.createUser(user, rolesIds);
+    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserRequestDTO dto, @RequestParam List<Integer> rolesIds) {
+        UserResponseDTO createdUser = userService.createUser(dto, rolesIds);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
