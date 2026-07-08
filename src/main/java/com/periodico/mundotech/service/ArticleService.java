@@ -12,7 +12,7 @@ public interface ArticleService {
     ArticleResponseDTO findById(Long id);
     List<ArticleResponseDTO> findByIdAuthor(Long authorId);
     List<ArticleResponseDTO> findByStatus(ArticleStatus status);
-    List<ArticleResponseDTO> findByIdAuthorAndStatus(Long authorId, ArticleStatus status);
+    List<ArticleResponseDTO> findByAuthorIdAndStatus(Long authorId, ArticleStatus status);
     ArticleResponseDTO updateArticle(Long id, ArticleRequestDTO dto, Long authorId);
     void deleteById(Long id, Long authorId);
     ArticleResponseDTO submitForReview(Long id, Long authorId);

@@ -71,7 +71,7 @@ public class ArticleController {
     public ResponseEntity<List<ArticleResponseDTO>> findByIdAuthorAndStatus(
             @RequestParam Long authorId,
             @RequestParam ArticleStatus status) {
-        return ResponseEntity.ok(articleService.findByIdAuthorAndStatus(authorId, status));
+        return ResponseEntity.ok(articleService.findByAuthorIdAndStatus(authorId, status));
     }
 
     @PutMapping("/{id}")

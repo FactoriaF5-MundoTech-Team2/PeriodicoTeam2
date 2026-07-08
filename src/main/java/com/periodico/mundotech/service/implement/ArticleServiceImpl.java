@@ -69,8 +69,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleResponseDTO> findByIdAuthorAndStatus(Long authorId, ArticleStatus status) {
-        return articleRepository.findByIdAuthorAndStatus(authorId, status).stream()
+    public List<ArticleResponseDTO> findByAuthorIdAndStatus(Long authorId, ArticleStatus status) {
+        return articleRepository.findByAuthorIdAndStatus(authorId, status).stream()
                 .map(articleMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
