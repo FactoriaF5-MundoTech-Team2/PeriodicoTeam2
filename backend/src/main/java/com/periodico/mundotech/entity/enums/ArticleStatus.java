@@ -4,5 +4,4 @@ public enum ArticleStatus {
     DRAFT,
     IN_REVIEW,
     PUBLISHED,
-    REJECTED
 }
