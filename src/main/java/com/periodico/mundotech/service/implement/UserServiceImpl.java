@@ -37,4 +37,12 @@ public class UserServiceImpl implements UserService {
         User saved = userRepository.save(user);
         return userMapper.toResponseDTO(saved);
     }
+
+    @Override 
+    public void deleteUser(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new RuntimeException("Usuario no encontrado con id: " + id);
+        }
+        userRepository.deleteById(id);
+    }
 }

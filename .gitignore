@@ -69,4 +69,5 @@ build/
 
 .env
 .env.local
+
 application-local.properties
