@@ -1,10 +1,14 @@
 package com.periodico.mundotech.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.periodico.mundotech.entity.FileData;
 
-public interface FileDataRepository extends JpaRepository<FileData, Integer> {
-
+@Repository
+public interface FileDataRepository extends JpaRepository<FileData, Long> {
+    Optional<FileData> findByName(String name);
 
 }
