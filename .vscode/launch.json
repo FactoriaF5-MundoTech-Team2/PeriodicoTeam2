@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Main<mundotech>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.periodico.mundotech.Main",
+            "projectName": "mundotech",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
