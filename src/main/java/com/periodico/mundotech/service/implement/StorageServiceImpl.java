@@ -11,9 +11,9 @@ import com.periodico.mundotech.entity.Article;
 import com.periodico.mundotech.entity.FileData;
 import com.periodico.mundotech.repository.ArticleRepository;
 import com.periodico.mundotech.service.StorageService;
-
-import jakarta.persistence.criteria.Path;
-import lombok.Value;
+import java.nio.file.Path;
+import java.util.UUID;
+import org.springframework.beans.factory.annotation.Value;
 
 @Service
 public class StorageServiceImpl implements StorageService {
@@ -29,7 +29,7 @@ public class StorageServiceImpl implements StorageService {
     @Override
     public String uploadImage(Long articleId, MultipartFile file) throws IOException {
         Article article = articleRepository.findById(articleId)
-                .orElseThrow(() -> new RuntimeException("ArtÃculo no encontrado con ID: " + articleId));
+                .orElseThrow(() -> new RuntimeException("Artículo no encontrado con ID: " + articleId));
 
         Path uploadPath = Path.of(uploadDir);
         Files.createDirectories(uploadPath);
@@ -46,13 +46,13 @@ public class StorageServiceImpl implements StorageService {
         FileData fileData = FileData.builder()
                 .name(filename)
                 .type(file.getContentType())
-                .filePath(filePath.toString())
+                .filePath("/uploads/" + filename)
                 .build();
 
         article.setImage(fileData);
         articleRepository.save(article);
 
-        return filePath.toString();
+        return "/uploads/" + filename;
     }
     
 }

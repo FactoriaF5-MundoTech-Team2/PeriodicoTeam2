@@ -15,7 +15,5 @@ public class ArticleRequestDTO {
 
     private LocalDate publishDate;
 
-    private String imageUrl;
-
     private Long authorId;
 }

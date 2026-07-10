@@ -14,7 +14,7 @@ public class ArticleMapper {
         dto.setTitle(article.getTitle());
         dto.setContent(article.getContent());
         dto.setPublishDate(article.getPublishDate());
-        dto.setImageUrl(article.getImageUrl());
+        dto.setImageUrl(article.getImage()!=null ? article.getImage().getFilePath():null);
         dto.setStatus(article.getStatus());
         dto.setAuthorName(article.getAuthor().getName());
 
@@ -26,7 +26,6 @@ public class ArticleMapper {
         article.setTitle(dto.getTitle());
         article.setContent(dto.getContent());
         article.setPublishDate(dto.getPublishDate());
-        article.setImageUrl(dto.getImageUrl());
 
         return article;
     }
