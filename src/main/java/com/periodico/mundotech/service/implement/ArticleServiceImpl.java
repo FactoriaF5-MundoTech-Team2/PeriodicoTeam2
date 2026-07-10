@@ -89,9 +89,7 @@ public class ArticleServiceImpl implements ArticleService {
         if (dto.getPublishDate() != null) {
             article.setPublishDate(dto.getPublishDate());
         }
-        if (dto.getImageUrl() != null) {
-            article.setImageUrl(dto.getImageUrl());
-        }
+
         return articleMapper.toResponseDTO(articleRepository.save(article));
     }
 
