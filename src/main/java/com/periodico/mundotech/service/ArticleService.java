@@ -16,7 +16,7 @@ public interface ArticleService {
     ArticleResponseDTO updateArticle(Long id, ArticleRequestDTO dto, Long authorId);
     void deleteById(Long id, Long authorId);
     ArticleResponseDTO submitForReview(Long id, Long authorId);
-    ArticleResponseDTO approve(Long id);
-    ArticleResponseDTO reject(Long id);
+    ArticleResponseDTO approve(Long id, Long managerId);
+    ArticleResponseDTO reject(Long id, Long managerId);
 
 }

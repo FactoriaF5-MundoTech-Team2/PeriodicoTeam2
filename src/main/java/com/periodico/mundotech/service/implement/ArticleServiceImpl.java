@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.periodico.mundotech.dto.request.ArticleRequestDTO;
 import com.periodico.mundotech.dto.response.ArticleResponseDTO;
 import com.periodico.mundotech.entity.Article;
+import com.periodico.mundotech.entity.User;
 import com.periodico.mundotech.entity.enums.ArticleStatus;
 import com.periodico.mundotech.mapper.ArticleMapper;
 import com.periodico.mundotech.repository.ArticleRepository;
@@ -31,6 +32,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleResponseDTO createArticle(ArticleRequestDTO dto) {
+        validateRole(dto.getAuthorId(), "AUTHOR");
         Article article = articleMapper.toEntity(dto);
         article.setAuthor(userRepository.findById(dto.getAuthorId())
                 .orElseThrow(() -> new RuntimeException("El autor con ID " + dto.getAuthorId() + " no existe")));
@@ -104,6 +106,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleResponseDTO submitForReview(Long id, Long authorId) {
+        validateRole(authorId, "AUTHOR");
         Article article = findArticleOrThrow(id);
         if (!article.getAuthor().getId().equals(authorId)) {
             throw new RuntimeException("Solo el autor puede enviar a revisión");
@@ -116,7 +119,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public ArticleResponseDTO approve(Long id) {
+    public ArticleResponseDTO approve(Long id, Long managerId) {
+        validateRole(managerId, "MANAGER");
         Article article = findArticleOrThrow(id);
         if (article.getStatus() != ArticleStatus.IN_REVIEW) {
             throw new RuntimeException("Solo los artículos en estado IN_REVIEW pueden aprobarse");
@@ -126,7 +130,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public ArticleResponseDTO reject(Long id) {
+    public ArticleResponseDTO reject(Long id, Long managerId) {
+        validateRole(managerId, "MANAGER");
         Article article = findArticleOrThrow(id);
         if (article.getStatus() != ArticleStatus.IN_REVIEW) {
             throw new RuntimeException("Solo los artículos en estado IN_REVIEW pueden rechazarse");
@@ -138,6 +143,16 @@ public class ArticleServiceImpl implements ArticleService {
     private Article findArticleOrThrow(Long id) {
         return articleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("El artículo con ID " + id + " no existe"));
+    }
+
+    private void validateRole(Long userId, String requiredRole) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID:  " + userId));
+        boolean hasRole = user.getRoles().stream()
+                .anyMatch(role -> role.getName().equals(requiredRole));
+        if (!hasRole) {
+            throw new RuntimeException("El usuario con ID " + userId + " no tiene el rol requerido: " + requiredRole);
+        }
     }
 
 }

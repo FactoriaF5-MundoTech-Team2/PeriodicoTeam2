@@ -101,12 +101,16 @@ public class ArticleController {
     }
 
     @PatchMapping("/{id}/approve")
-    public ResponseEntity<ArticleResponseDTO> approve(@PathVariable Long id) {
-        return ResponseEntity.ok(articleService.approve(id));
+    public ResponseEntity<ArticleResponseDTO> approve(
+        @PathVariable Long id,
+        @RequestParam Long managerId) {
+        return ResponseEntity.ok(articleService.approve(id, managerId));
     }
 
     @PatchMapping("/{id}/reject")
-    public ResponseEntity<ArticleResponseDTO> reject(@PathVariable Long id) {
-        return ResponseEntity.ok(articleService.reject(id));
+    public ResponseEntity<ArticleResponseDTO> reject(
+        @PathVariable Long id,
+        @RequestParam Long managerId) {
+        return ResponseEntity.ok(articleService.reject(id, managerId));
     }
 }
