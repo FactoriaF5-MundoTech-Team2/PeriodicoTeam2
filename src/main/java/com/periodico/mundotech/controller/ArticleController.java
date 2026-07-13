@@ -1,8 +1,6 @@
 package com.periodico.mundotech.controller;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.periodico.mundotech.dto.request.ArticleRequestDTO;
 import com.periodico.mundotech.dto.response.ArticleResponseDTO;
 import com.periodico.mundotech.entity.enums.ArticleStatus;
 import com.periodico.mundotech.service.ArticleService;
-import com.periodico.mundotech.service.StorageService;
 
 import jakarta.validation.Valid;
 
@@ -31,19 +27,9 @@ import jakarta.validation.Valid;
 public class ArticleController {
     
     private final ArticleService articleService;
-    private final StorageService storageService;
 
-    public ArticleController(ArticleService articleService, StorageService storageService){
+    public ArticleController(ArticleService articleService){
         this.articleService=articleService;
-        this.storageService=storageService;
-    }
-
-    @PostMapping("/upload")
-    public ResponseEntity<Map<String, String>> uploadImage(@RequestParam("articleId") Long articleId, 
-@RequestParam("file") MultipartFile file) throws IOException{
-        String filePath=storageService.uploadImage(articleId, file);
-        
-        return new ResponseEntity<>(Map.of("imageUrl", filePath), HttpStatus.CREATED);
     }
     
 
@@ -101,12 +87,16 @@ public class ArticleController {
     }
 
     @PatchMapping("/{id}/approve")
-    public ResponseEntity<ArticleResponseDTO> approve(@PathVariable Long id) {
-        return ResponseEntity.ok(articleService.approve(id));
+    public ResponseEntity<ArticleResponseDTO> approve(
+        @PathVariable Long id,
+        @RequestParam Long managerId) {
+        return ResponseEntity.ok(articleService.approve(id, managerId));
     }
 
     @PatchMapping("/{id}/reject")
-    public ResponseEntity<ArticleResponseDTO> reject(@PathVariable Long id) {
-        return ResponseEntity.ok(articleService.reject(id));
+    public ResponseEntity<ArticleResponseDTO> reject(
+        @PathVariable Long id,
+        @RequestParam Long managerId) {
+        return ResponseEntity.ok(articleService.reject(id, managerId));
     }
 }

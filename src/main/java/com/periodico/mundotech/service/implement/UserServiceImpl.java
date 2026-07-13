@@ -39,7 +39,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override 
-    public void deleteUser(Long id) {
+    public void deleteUser(Long id, Long requestingUserId) {
+        if (!id.equals(requestingUserId)){
+            throw new RuntimeException("Solo puedes eliminar tu propio usuario");
+        }
         if (!userRepository.existsById(id)) {
             throw new RuntimeException("Usuario no encontrado con id: " + id);
         }

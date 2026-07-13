@@ -71,3 +71,5 @@ build/
 .env.local
 
 application-local.properties
+uploads/
+.vscode/
