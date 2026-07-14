@@ -3,8 +3,11 @@ package com.periodico.mundotech.service.implement;
 import java.util.List;
 import java.util.Set;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.stereotype.Service;
 
+import com.periodico.mundotech.dto.request.LoginRequestDTO;
 import com.periodico.mundotech.dto.request.UserRequestDTO;
 import com.periodico.mundotech.dto.response.UserResponseDTO;
 import com.periodico.mundotech.entity.Role;
@@ -47,5 +50,16 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Usuario no encontrado con id: " + id);
         }
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public UserResponseDTO login(LoginRequestDTO dto) {
+        User user = userRepository.findByEmail(dto.getEmail())
+        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        if (!user.getPassword().equals(dto.getPassword())) {
+            throw new RuntimeException("Contraseña incorrecta");
+    
+        }
+        return userMapper.toResponseDTO(user);
     }
 }
