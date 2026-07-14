@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.periodico.mundotech.dto.request.LoginRequestDTO;
 import com.periodico.mundotech.dto.request.UserRequestDTO;
 import com.periodico.mundotech.dto.response.UserResponseDTO;
 import com.periodico.mundotech.service.UserService;
@@ -42,4 +43,8 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<UserResponseDTO> login(@RequestBody LoginRequestDTO dto) {
+        return ResponseEntity.ok(userService.login(dto));
+    }
 }
