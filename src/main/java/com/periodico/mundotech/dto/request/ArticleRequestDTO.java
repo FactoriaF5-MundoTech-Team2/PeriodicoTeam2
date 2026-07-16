@@ -10,7 +10,6 @@ public class ArticleRequestDTO {
     @NotBlank(message = "El título no puede estar vacío")
     private String title;
 
-    @NotBlank(message = "El contenido no puede estar vacío")
     private String content;
 
     private LocalDate publishDate;

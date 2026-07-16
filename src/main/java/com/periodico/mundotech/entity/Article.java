@@ -39,7 +39,6 @@ public class Article {
     @Column(nullable = false)
     private String title;
 
-    @NotBlank(message = "El contenido no puede estar vacío")
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
